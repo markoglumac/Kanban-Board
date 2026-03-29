@@ -65,6 +65,7 @@ function cancelAdd() {
     transition:
       background 0.2s,
       color 0.2s;
+    flex-shrink: 0;
 
     &:hover {
       background: rgba(255, 255, 255, 0.08);
@@ -78,6 +79,7 @@ function cancelAdd() {
     border-radius: 12px;
     padding: 20px;
     width: 300px;
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -101,6 +103,15 @@ function cancelAdd() {
   &__add-actions {
     display: flex;
     gap: 8px;
+  }
+
+  // mobile
+  @media (max-width: 768px) {
+    padding: 16px;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
   }
 }
 </style>

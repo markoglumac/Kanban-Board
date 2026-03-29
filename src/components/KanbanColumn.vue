@@ -81,6 +81,11 @@ function cancelAdd() {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  flex-shrink: 0;
+
+  @media (max-width: 768px) {
+    width: 85vw;
+  }
 
   &__title {
     font-size: 16px;
