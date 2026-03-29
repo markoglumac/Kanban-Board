@@ -1,6 +1,6 @@
 <template>
   <div class="kanban-card">
-    <div v-if="editing" class="kanban-card__edit">
+    <div v-if="editing" class="kanban-card__edit" @touchstart.stop>
       <textarea
         v-model="editTitle"
         class="kanban-card__textarea"
