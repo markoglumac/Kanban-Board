@@ -140,6 +140,10 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
   align-items: center;
   justify-content: center;
   z-index: 100;
+
+  @media (max-width: 768px) {
+    align-items: flex-end;
+  }
 }
 
 .modal {
@@ -155,6 +159,14 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
   display: flex;
   flex-direction: column;
   gap: 24px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 100%;
+    max-height: 85vh;
+    border-radius: 14px 14px 0 0;
+    padding: 24px 20px;
+  }
 
   &__close {
     position: absolute;
@@ -242,6 +254,12 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-wrap: wrap;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: stretch;
+    }
   }
 
   &__colors {
@@ -273,6 +291,10 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
     outline: none;
     flex: 1;
 
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+
     &:focus {
       border-color: #5c6bc0;
     }
@@ -288,6 +310,10 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
     padding: 10px 12px;
     resize: vertical;
     outline: none;
+
+    @media (max-width: 768px) {
+      resize: none;
+    }
 
     &:focus {
       border-color: #5c6bc0;
