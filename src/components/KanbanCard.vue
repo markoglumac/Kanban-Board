@@ -9,8 +9,8 @@
         @keydown.esc="cancelEdit"
       />
       <div class="kanban-card__edit-actions">
-        <button class="btn btn--primary" @click="confirmEdit">✓</button>
-        <button class="btn btn--ghost" @click="cancelEdit">✕</button>
+        <button class="btn btn--primary" @mousedown.prevent @click="confirmEdit">✓</button>
+        <button class="btn btn--ghost" @mousedown.prevent @click="cancelEdit">✕</button>
       </div>
     </div>
     <span v-else class="kanban-card__title" @click="modalOpen = true">{{ card.title }}</span>
