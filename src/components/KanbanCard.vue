@@ -11,7 +11,7 @@
     />
     <span v-else class="kanban-card__title" @click="modalOpen = true">{{ card.title }}</span>
 
-    <div class="kanban-card__actions">
+    <div class="kanban-card__actions" @mousedown.stop @touchstart.stop>
       <button class="kanban-card__btn" title="Edit" @click="startEdit">✏️</button>
       <button class="kanban-card__btn" title="Delete" @click="store.deleteCard(columnId, card.id)">
         🗑️
