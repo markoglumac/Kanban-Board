@@ -11,7 +11,13 @@
       </button>
     </div>
 
-    <VueDraggable v-model="cards" group="cards" class="kanban-column__cards">
+    <VueDraggable
+      v-model="cards"
+      group="cards"
+      class="kanban-column__cards"
+      :filter="'.kanban-card__actions'"
+      :prevent-on-filter="true"
+    >
       <KanbanCard v-for="card in cards" :key="card.id" :card="card" :column-id="column.id" />
     </VueDraggable>
 
