@@ -17,6 +17,7 @@
       class="kanban-column__cards"
       :filter="'.kanban-card__actions'"
       :prevent-on-filter="true"
+      handle=".kanban-card__drag-handle"
     >
       <KanbanCard v-for="card in cards" :key="card.id" :card="card" :column-id="column.id" />
     </VueDraggable>
