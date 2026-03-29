@@ -2,6 +2,8 @@
 
 A Jira-style Kanban board built as a portfolio project, featuring drag-and-drop task management and persistent state.
 
+Live demo: https://movie-search-app-iota-five.vercel.app/
+
 ## Tech Stack
 
 - Vue 3 + TypeScript
