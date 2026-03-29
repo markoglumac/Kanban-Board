@@ -1,5 +1,6 @@
 <template>
   <div class="kanban-card">
+    <div class="kanban-card__drag-handle">⠿</div>
     <div v-if="editing" class="kanban-card__edit" @touchstart.stop>
       <textarea
         v-model="editTitle"
@@ -80,6 +81,19 @@ function cancelEdit() {
 
   &:active {
     cursor: grabbing;
+  }
+
+  &__drag-handle {
+    color: #6b7299;
+    cursor: grab;
+    font-size: 16px;
+    padding: 0 4px;
+    flex-shrink: 0;
+    align-self: center;
+
+    &:active {
+      cursor: grabbing;
+    }
   }
 
   &__title {
