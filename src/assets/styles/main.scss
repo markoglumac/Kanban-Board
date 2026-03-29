@@ -1,0 +1,41 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #13152a;
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn {
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 16px;
+  transition: background 0.2s;
+
+  &--primary {
+    background: #5c6bc0;
+    color: #fff;
+
+    &:hover {
+      background: #6c7fd0;
+    }
+  }
+
+  &--ghost {
+    background: transparent;
+    color: #6b7299;
+
+    &:hover {
+      color: #a0a8d0;
+    }
+  }
+}
