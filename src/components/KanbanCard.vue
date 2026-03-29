@@ -1,14 +1,18 @@
 <template>
   <div class="kanban-card">
-    <textarea
-      v-if="editing"
-      v-model="editTitle"
-      class="kanban-card__textarea"
-      rows="2"
-      @keydown.enter.prevent="confirmEdit"
-      @keydown.esc="cancelEdit"
-      @blur="confirmEdit"
-    />
+    <div v-if="editing" class="kanban-card__edit">
+      <textarea
+        v-model="editTitle"
+        class="kanban-card__textarea"
+        rows="2"
+        @keydown.enter.prevent="confirmEdit"
+        @keydown.esc="cancelEdit"
+      />
+      <div class="kanban-card__edit-actions">
+        <button class="btn btn--primary" @click="confirmEdit">✓</button>
+        <button class="btn btn--ghost" @click="cancelEdit">✕</button>
+      </div>
+    </div>
     <span v-else class="kanban-card__title" @click="modalOpen = true">{{ card.title }}</span>
 
     <div class="kanban-card__actions" @mousedown.stop @touchstart.stop>
@@ -72,15 +76,6 @@ function cancelEdit() {
   justify-content: space-between;
   gap: 8px;
 
-  &:hover {
-    background: #313447;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-
-    .kanban-card__actions {
-      opacity: 1;
-    }
-  }
-
   &:active {
     cursor: grabbing;
   }
@@ -106,7 +101,6 @@ function cancelEdit() {
   &__actions {
     display: flex;
     gap: 4px;
-    opacity: 0;
     transition: opacity 0.2s;
     flex-shrink: 0;
   }
@@ -123,6 +117,18 @@ function cancelEdit() {
     &:hover {
       background: #3a3d4e;
     }
+  }
+
+  &__edit {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+  }
+
+  &__edit-actions {
+    display: flex;
+    gap: 6px;
   }
 }
 </style>
