@@ -1,41 +1,183 @@
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/poppins-light.woff2') format('woff2');
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/poppins-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/poppins-medium.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/poppins-semibold.woff2') format('woff2');
+  font-weight: 600;
+  font-display: swap;
+}
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+}
+
+html {
+  background: $main;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: #13152a;
-  font-family: 'Inter', system-ui, sans-serif;
+  --focus-color: #{$paper};
+  margin: 0;
+  min-height: 100vh;
+  background: $main;
+  color: $paper;
+  font-family: $font;
+  font-size: 16px;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: $main;
+  color: $paper;
+}
+
+// ring follows the section background, so filled buttons get one too
+:focus-visible {
+  outline: 0.125rem solid var(--focus-color);
+  outline-offset: 0.25rem;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  > main {
+    flex: 1;
+    width: 100%;
+  }
+}
+
+.skin--light {
+  --focus-color: #{$main};
+  @include skin-light;
 }
 
 .btn {
-  border: none;
-  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border: 1px solid transparent;
+  border-radius: $pill;
+  background: $main;
+  color: $paper;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
   cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-  padding: 8px 16px;
-  transition: background 0.2s;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
 
   &--primary {
-    background: #5c6bc0;
-    color: #fff;
+    background: $main;
+    color: $paper;
+  }
 
-    &:hover {
-      background: #6c7fd0;
-    }
+  &--light {
+    background: $paper;
+    color: $main;
+  }
+
+  &--outline,
+  &--ghost {
+    background: transparent;
+    border-color: currentColor;
+    color: inherit;
   }
 
   &--ghost {
-    background: transparent;
-    color: #6b7299;
+    border-color: transparent;
+    opacity: 0.75;
 
     &:hover {
-      color: #a0a8d0;
+      opacity: 1;
+      transform: none;
     }
+  }
+}
+
+// shared text field for light surfaces
+.field {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid $line-light;
+  border-radius: 0.75rem;
+  background: #fff;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: $ink;
+  outline: none;
+  resize: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &::placeholder {
+    color: rgba($ink, 0.45);
+  }
+
+  &:focus {
+    border-color: $main;
+    box-shadow: 0 0 0 3px $tag;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
   }
 }
