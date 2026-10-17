@@ -1,20 +1,26 @@
 <template>
-  <div class="kanban-column">
-    <div class="kanban-column__header">
+  <section class="kanban-column">
+    <header class="kanban-column__header">
+      <span class="kanban-column__number">{{ number }}</span>
       <h2 class="kanban-column__title">{{ column.title }}</h2>
+      <span class="kanban-column__count">{{ cards.length }}</span>
       <button
         class="kanban-column__delete"
-        title="Delete column"
+        title="Delete list"
+        aria-label="Delete list"
         @click="store.deleteColumn(column.id)"
       >
-        ✕
+        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+          <path d="M4 4l8 8M12 4l-8 8" />
+        </svg>
       </button>
-    </div>
+    </header>
 
     <VueDraggable
       v-model="cards"
       group="cards"
       class="kanban-column__cards"
+      ghost-class="kanban-card--ghost"
       :filter="'.kanban-card__actions'"
       :prevent-on-filter="true"
       handle=".kanban-card__drag-handle"
@@ -25,20 +31,21 @@
     <div v-if="adding" class="kanban-column__add-form">
       <textarea
         v-model="newTitle"
-        class="kanban-column__textarea"
-        placeholder="Card title..."
+        class="field"
+        placeholder="What needs doing?"
         rows="2"
+        autofocus
         @keydown.enter.prevent="confirmAdd"
         @keydown.esc="cancelAdd"
       />
       <div class="kanban-column__add-actions">
-        <button class="btn btn--primary" @click="confirmAdd">Add</button>
+        <button class="btn btn--primary" @click="confirmAdd">Add card</button>
         <button class="btn btn--ghost" @click="cancelAdd">Cancel</button>
       </div>
     </div>
 
     <button v-else class="kanban-column__add-btn" @click="adding = true">+ Add a card</button>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -50,9 +57,12 @@ import type { Column } from '@/types'
 
 const props = defineProps<{
   column: Column
+  index: number
 }>()
 
 const store = useBoardStore()
+
+const number = computed(() => String(props.index + 1).padStart(2, '0'))
 
 const cards = computed({
   get: () => props.column.cards,
@@ -79,113 +89,128 @@ function cancelAdd() {
 
 <style scoped lang="scss">
 .kanban-column {
-  background: #1e2030;
-  border: 1px solid #2e3150;
-  border-radius: 12px;
-  padding: 20px;
-  width: 300px;
-  min-height: 500px;
+  width: 260px;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  flex-shrink: 0;
+  gap: 0.75rem;
+  padding: 1.125rem;
+  border-radius: $radius;
+  background: $tag;
+  scroll-snap-align: start;
 
-  @media (max-width: 768px) {
-    width: 85vw;
+  @include screenSize768 {
+    width: 82vw;
+  }
+
+  &__header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.625rem;
+    padding: 0 0.25rem 0.25rem;
+  }
+
+  &__number {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    opacity: 0.55;
   }
 
   &__title {
-    font-size: 16px;
-    font-weight: 700;
-    margin: 0 0 10px;
-    color: #a0a8d0;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    flex: 1;
+    min-width: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    overflow-wrap: anywhere;
+  }
+
+  &__count {
+    min-width: 1.5rem;
+    padding: 0.125rem 0.5rem;
+    border-radius: $pill;
+    background: $tag;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  &__delete {
+    align-self: center;
+    display: flex;
+    padding: 0.25rem;
+    border: none;
+    border-radius: $pill;
+    background: none;
+    cursor: pointer;
+    opacity: 0;
+    transition:
+      opacity 0.2s ease,
+      background-color 0.2s ease;
+
+    svg {
+      fill: none;
+      stroke: $ink;
+      stroke-width: 1.5;
+    }
+
+    .kanban-column:hover &,
+    &:focus-visible {
+      opacity: 0.6;
+    }
+
+    &:hover {
+      opacity: 1 !important;
+      background: $tag;
+
+      svg {
+        stroke: $danger;
+      }
+    }
+
+    @media (hover: none) {
+      opacity: 0.6;
+    }
   }
 
   &__cards {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    flex: 1;
-    min-height: 60px;
+    gap: 0.625rem;
+    min-height: 80px;
   }
 
   &__add-btn {
-    background: transparent;
+    padding: 0.625rem 0.75rem;
     border: none;
-    color: #6b7299;
-    font-size: 14px;
-    padding: 8px 4px;
-    cursor: pointer;
+    border-radius: 0.75rem;
+    background: none;
+    font-weight: 500;
+    color: $ink;
     text-align: left;
-    transition: color 0.2s;
+    opacity: 0.65;
+    cursor: pointer;
+    transition:
+      opacity 0.2s ease,
+      background-color 0.2s ease;
 
     &:hover {
-      color: #a0a8d0;
+      opacity: 1;
+      background: $tag;
     }
   }
 
   &__add-form {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-  }
-
-  &__textarea {
-    background: #2a2d3e;
-    border: 1px solid #3a3d4e;
-    border-radius: 8px;
-    color: #e0e2f0;
-    font-size: 15px;
-    padding: 10px 12px;
-    resize: none;
-    outline: none;
-    font-family: inherit;
-
-    &:focus {
-      border-color: #5c6bc0;
-    }
+    gap: 0.625rem;
   }
 
   &__add-actions {
     display: flex;
-    gap: 8px;
-  }
-
-  &__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
-
-  &__title {
-    font-size: 16px;
-    font-weight: 700;
-    margin: 0;
-    color: #a0a8d0;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-
-  &__delete {
-    background: transparent;
-    border: none;
-    color: #6b7299;
-    cursor: pointer;
-    font-size: 14px;
-    padding: 4px 6px;
-    border-radius: 4px;
-    line-height: 1;
-    transition:
-      color 0.2s,
-      background 0.2s;
-
-    &:hover {
-      color: #e06c75;
-      background: #2a2d3e;
-    }
+    gap: 0.5rem;
   }
 }
 </style>
