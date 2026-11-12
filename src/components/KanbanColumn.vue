@@ -89,14 +89,15 @@ function cancelAdd() {
 
 <style scoped lang="scss">
 .kanban-column {
-  width: 260px;
+  width: 272px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  padding: 1.125rem;
-  border-radius: $radius;
-  background: $tag;
+  padding: 1rem;
+  border: 1px solid $line;
+  border-radius: $radius-lg;
+  background: $surface;
   scroll-snap-align: start;
 
   @include screenSize768 {
@@ -107,33 +108,34 @@ function cancelAdd() {
     display: flex;
     align-items: baseline;
     gap: 0.625rem;
-    padding: 0 0.25rem 0.25rem;
+    padding: 0 0.125rem 0.75rem;
+    border-bottom: 1px solid $line;
   }
 
   &__number {
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    opacity: 0.55;
+    @include label;
   }
 
   &__title {
     flex: 1;
     min-width: 0;
-    font-size: 1.125rem;
+    font-size: 1.0625rem;
     font-weight: 600;
     line-height: 1.3;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
     overflow-wrap: anywhere;
   }
 
   &__count {
     min-width: 1.5rem;
-    padding: 0.125rem 0.5rem;
-    border-radius: $pill;
-    background: $tag;
-    font-size: 0.8125rem;
+    padding: 0.125rem 0.4375rem;
+    border: 1px solid $line;
+    border-radius: 4px;
+    font-size: 0.75rem;
     font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.4;
+    color: $ink-2;
     text-align: center;
   }
 
@@ -142,63 +144,58 @@ function cancelAdd() {
     display: flex;
     padding: 0.25rem;
     border: none;
-    border-radius: $pill;
+    border-radius: 4px;
     background: none;
     cursor: pointer;
     opacity: 0;
-    transition:
-      opacity 0.2s ease,
-      background-color 0.2s ease;
+    transition: opacity 0.2s $ease;
 
     svg {
       fill: none;
-      stroke: $ink;
+      stroke: $muted;
       stroke-width: 1.5;
+      transition: stroke 0.2s $ease;
     }
 
     .kanban-column:hover &,
     &:focus-visible {
-      opacity: 0.6;
+      opacity: 1;
     }
 
-    &:hover {
-      opacity: 1 !important;
-      background: $tag;
-
-      svg {
-        stroke: $danger;
-      }
+    &:hover svg {
+      stroke: $danger;
     }
 
     @media (hover: none) {
-      opacity: 0.6;
+      opacity: 1;
     }
   }
 
   &__cards {
     display: flex;
     flex-direction: column;
-    gap: 0.625rem;
+    gap: 0.5rem;
     min-height: 80px;
   }
 
   &__add-btn {
-    padding: 0.625rem 0.75rem;
+    min-height: 2.5rem;
+    padding: 0.5rem 0.625rem;
     border: none;
-    border-radius: 0.75rem;
+    border-radius: $radius;
     background: none;
+    font-size: 0.875rem;
     font-weight: 500;
-    color: $ink;
+    color: $ink-2;
     text-align: left;
-    opacity: 0.65;
     cursor: pointer;
     transition:
-      opacity 0.2s ease,
-      background-color 0.2s ease;
+      color 0.2s $ease,
+      background-color 0.2s $ease;
 
     &:hover {
-      opacity: 1;
-      background: $tag;
+      color: $ink;
+      background: $raised;
     }
   }
 

@@ -1,7 +1,7 @@
 <template>
   <Teleport to="body">
     <div class="modal-backdrop" @click.self="$emit('close')">
-      <div class="modal skin--light" role="dialog" aria-modal="true">
+      <div class="modal" role="dialog" aria-modal="true">
         <div class="modal__top">
           <span class="modal__eyebrow">Card details</span>
           <button class="modal__close" aria-label="Close" @click="$emit('close')">
@@ -96,9 +96,9 @@ const localDescription = ref(props.card.description ?? '')
 const localLabels = ref<Label[]>(props.card.labels ? [...props.card.labels] : [])
 
 const newLabelText = ref('')
-// tones picked to sit next to the aubergine/off-white palette
-const labelColors = ['#24061c', '#8c2f5d', '#c2416b', '#b07d2b', '#2f6b4f', '#3d5a80']
-const selectedColor = ref('#8c2f5d')
+// tones picked to read on the near-black palette; first is the portfolio accent
+const labelColors = ['#34d399', '#60a5fa', '#a78bfa', '#f472b6', '#fbbf24', '#a3a3a3']
+const selectedColor = ref('#34d399')
 
 watch(
   () => props.card,
@@ -152,8 +152,9 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
   align-items: center;
   justify-content: center;
   padding: $gutter;
-  background: rgba($main, 0.7);
-  backdrop-filter: blur(4px);
+  background: color-mix(in srgb, $bg 78%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 
   @include screenSize768 {
     align-items: flex-end;
@@ -170,14 +171,17 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
   display: flex;
   flex-direction: column;
   gap: 1.75rem;
-  padding: 1.75rem 2rem 2rem;
-  border-radius: calc(#{$radius} * 1.25);
-  box-shadow: $shadow-hover;
+  padding: 1.5rem 1.75rem 1.75rem;
+  border: 1px solid $line;
+  border-radius: $radius-lg;
+  background: $surface;
+  color: $ink;
 
   @include screenSize768 {
     max-height: 88vh;
     padding: 1.25rem $gutter 1.75rem;
-    border-radius: 2rem 0 0 0;
+    border-radius: $radius-lg $radius-lg 0 0;
+    border-bottom: 0;
   }
 
   &__top {
@@ -187,18 +191,17 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
   }
 
   &__eyebrow {
-    @include eyebrow;
-    font-size: 0.75rem;
+    @include label;
   }
 
   &__close {
     display: flex;
     padding: 0.5rem;
-    border: none;
-    border-radius: $pill;
-    background: $tag;
+    border: 1px solid $line-strong;
+    border-radius: $radius;
+    background: transparent;
     cursor: pointer;
-    transition: transform 0.2s ease;
+    transition: border-color 0.2s $ease;
 
     svg {
       fill: none;
@@ -207,7 +210,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
     }
 
     &:hover {
-      transform: rotate(90deg);
+      border-color: $ink;
     }
   }
 
@@ -217,10 +220,10 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
     padding: 0;
     border: none;
     background: transparent;
-    font-size: clamp(1.5rem, 4vw, 2rem);
-    font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
+    font-size: clamp(1.5rem, 3.4vw, 2rem);
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
     color: $ink;
     resize: none;
     outline: none;
@@ -232,29 +235,31 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid $line;
   }
 
   &__label {
-    @include eyebrow;
-    font-size: 0.75rem;
+    @include label;
   }
 
   &__labels {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.375rem;
   }
 
   &__tag {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.375rem 0.5rem 0.375rem 0.875rem;
-    border-radius: $pill;
-    background: $tag;
-    font-size: 0.875rem;
+    padding: 0.25rem 0.25rem 0.25rem 0.625rem;
+    border: 1px solid $line;
+    border-radius: 4px;
+    font-size: 0.8125rem;
     font-weight: 500;
     line-height: 1.4;
+    color: $ink-2;
 
     i {
       width: 0.5rem;
@@ -271,16 +276,14 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
     height: 1.25rem;
     padding: 0;
     border: none;
-    border-radius: $pill;
+    border-radius: 3px;
     background: none;
     font-size: 0.625rem;
-    color: $ink;
-    opacity: 0.6;
+    color: $muted;
     cursor: pointer;
+    transition: color 0.2s $ease;
 
     &:hover {
-      opacity: 1;
-      background: $tag;
       color: $danger;
     }
   }
@@ -300,7 +303,8 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
   &__input {
     flex: 1;
     min-width: 160px;
-    padding-block: 0.625rem;
+    min-height: 2.5rem;
+    padding-block: 0.5rem;
   }
 
   &__colors {
@@ -312,16 +316,14 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
     width: 1.375rem;
     height: 1.375rem;
     padding: 0;
-    border: 2px solid $paper;
+    border: 2px solid $surface;
     border-radius: 50%;
-    box-shadow: 0 0 0 1px transparent;
+    box-shadow: 0 0 0 1px $line;
     cursor: pointer;
-    transition:
-      box-shadow 0.2s ease,
-      transform 0.2s ease;
+    transition: box-shadow 0.2s $ease;
 
     &:hover {
-      transform: translateY(-2px);
+      box-shadow: 0 0 0 1px $line-strong;
     }
 
     &.active {
