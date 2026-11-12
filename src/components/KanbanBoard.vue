@@ -57,7 +57,7 @@ function cancelAdd() {
 .kanban-board {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  scrollbar-color: $line-light transparent;
+  scrollbar-color: $line-strong transparent;
 
   @include screenSize768 {
     scroll-snap-type: x mandatory;
@@ -67,50 +67,49 @@ function cancelAdd() {
   &__track {
     display: flex;
     align-items: flex-start;
-    gap: 1.25rem;
+    gap: 1.5rem;
     width: max-content;
     // first list lines up with the hero text, the board runs past it on the right
-    padding: 0.5rem $gutter 1.5rem max(#{$gutter}, calc((100% - #{$content-width}) / 2));
+    padding: 0.25rem $gutter 1.5rem max(#{$gutter}, calc((100% - #{$content-width}) / 2));
   }
 
   &__add-btn {
-    width: 260px;
+    width: 272px;
     flex-shrink: 0;
-    padding: 1.125rem 1.25rem;
-    border: 1px dashed rgba($main, 0.3);
-    border-radius: $radius;
+    min-height: 2.75rem;
+    padding: 0.875rem 1.125rem;
+    border: 1px dashed $line-strong;
+    border-radius: $radius-lg;
     background: transparent;
+    font-size: 0.9375rem;
     font-weight: 500;
-    color: $ink;
+    color: $ink-2;
     text-align: left;
-    opacity: 0.7;
     cursor: pointer;
     transition:
-      opacity 0.2s ease,
-      background-color 0.2s ease,
-      border-color 0.2s ease;
+      color 0.2s $ease,
+      border-color 0.2s $ease;
 
     &:hover {
-      opacity: 1;
-      border-color: $main;
-      background: $tag;
+      border-color: $ink;
+      color: $ink;
     }
   }
 
   &__add-form {
-    width: 260px;
+    width: 272px;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    padding: 1.125rem;
-    border-radius: $radius;
-    background: $tag;
+    padding: 1rem;
+    border: 1px solid $line;
+    border-radius: $radius-lg;
+    background: $surface;
   }
 
   &__add-label {
-    @include eyebrow;
-    font-size: 0.75rem;
+    @include label;
   }
 
   &__add-actions {

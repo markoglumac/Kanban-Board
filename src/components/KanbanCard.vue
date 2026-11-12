@@ -106,51 +106,40 @@ function cancelEdit() {
   display: flex;
   align-items: flex-start;
   gap: 0.5rem;
-  padding: 0.875rem 0.75rem 0.875rem 0.5rem;
-  border: 1px solid $tag;
-  border-radius: 0.75rem;
-  background: $card;
+  padding: 0.75rem 0.625rem 0.75rem 0.375rem;
+  border: 1px solid $line;
+  border-radius: $radius;
+  background: $raised;
   color: $ink;
-  box-shadow: $shadow;
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+  transition: border-color 0.25s $ease;
 
   &:hover,
   &:focus-within {
-    transform: translateY(-2px);
-    box-shadow: $shadow-hover;
+    border-color: $line-strong;
   }
 
   // placeholder left behind while dragging
   &--ghost {
-    opacity: 0.5;
-    box-shadow: none;
-    border: 1px dashed rgba($main, 0.4);
+    opacity: 0.6;
+    border: 1px dashed $accent;
     background: transparent;
   }
 
   &__drag-handle {
     flex-shrink: 0;
     padding: 0.25rem;
-    border-radius: 0.375rem;
+    border-radius: 4px;
     cursor: grab;
     touch-action: none;
-    transition: background-color 0.2s ease;
 
     svg {
       display: block;
-      fill: $ink;
-      opacity: 0.35;
-      transition: opacity 0.2s ease;
+      fill: $muted;
+      transition: fill 0.2s $ease;
     }
 
-    &:hover {
-      background: $tag;
-
-      svg {
-        opacity: 0.8;
-      }
+    &:hover svg {
+      fill: $ink;
     }
 
     &:active {
@@ -174,12 +163,13 @@ function cancelEdit() {
     display: inline-flex;
     align-items: center;
     gap: 0.375rem;
-    padding: 0.125rem 0.625rem 0.125rem 0.5rem;
-    border-radius: $pill;
-    background: $tag;
+    padding: 0.1875rem 0.5rem;
+    border: 1px solid $line;
+    border-radius: 4px;
     font-size: 0.75rem;
     font-weight: 500;
-    line-height: 1.5;
+    line-height: 1.4;
+    color: $ink-2;
 
     i {
       width: 0.4375rem;
@@ -189,36 +179,34 @@ function cancelEdit() {
     }
   }
 
-  // underline grows on hover, like the portfolio's links
+  // underline appears on hover, like the portfolio's links
   &__title {
     display: inline;
-    font-size: 0.9375rem;
-    font-weight: 500;
-    line-height: 1.4;
     overflow-wrap: anywhere;
     cursor: pointer;
-    background-image: linear-gradient($ink, $ink);
-    background-position: 0 100%;
-    background-repeat: no-repeat;
-    background-size: 0% 1px;
-    transition: background-size 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s $ease;
 
     &:hover {
-      background-size: 100% 1px;
+      text-decoration-color: $accent;
     }
   }
 
   &__heading {
     font-size: 0.9375rem;
     font-weight: 500;
-    line-height: 1.4;
+    line-height: 1.45;
+    letter-spacing: -0.01em;
   }
 
   &__note {
     display: block;
     margin-top: 0.375rem;
     font-size: 0.75rem;
-    opacity: 0.55;
+    font-weight: 500;
+    color: $muted;
   }
 
   &__actions {
@@ -226,7 +214,7 @@ function cancelEdit() {
     gap: 0.125rem;
     flex-shrink: 0;
     opacity: 0;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.2s $ease;
 
     .kanban-card:hover &,
     .kanban-card:focus-within & {
@@ -242,24 +230,19 @@ function cancelEdit() {
     display: flex;
     padding: 0.3125rem;
     border: none;
-    border-radius: $pill;
+    border-radius: 4px;
     background: none;
     cursor: pointer;
-    transition: background-color 0.2s ease;
 
     svg {
       fill: none;
-      stroke: $ink;
+      stroke: $muted;
       stroke-width: 1.5;
-      opacity: 0.6;
+      transition: stroke 0.2s $ease;
     }
 
-    &:hover {
-      background: $tag;
-
-      svg {
-        opacity: 1;
-      }
+    &:hover svg {
+      stroke: $ink;
     }
 
     &--danger:hover svg {
